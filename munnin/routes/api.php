@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Events\Hello;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -29,5 +30,9 @@ Route::group([
     ], function() {
         Route::get('logout', [AuthController::class,'logout']);
         Route::get('user', [AuthController::class,'user']);
+        Route::get('directv',function(){
+            broadcast(new Hello());
+        });
+        Route::get('/user-socket', [AuthController::class,'userSocket']);
     });
 });

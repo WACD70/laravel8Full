@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\User;
+use App\Events\Hello;
 class AuthController extends Controller
 {
     /**
@@ -34,7 +35,7 @@ class AuthController extends Controller
             'message' => 'Successfully created user!'
         ], 201);
     }
-  
+
     /**
      * Login user and create token
      *
@@ -93,5 +94,11 @@ class AuthController extends Controller
     public function user(Request $request)
     {
         return response()->json($request->user());
-    }   //
+    }
+    
+    public function userSocket(Request $request)
+    {
+        $data = response()->json($request->user());
+        event(new Hello($data));
+    }//
 }
